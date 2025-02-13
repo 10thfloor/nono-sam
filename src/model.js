@@ -1,24 +1,21 @@
-import { state } from "./state.js";
-
-let model = {
-  counter: 0
-};
-
-const present = data => {
-  try {
-    let update = accept(data);
-    model = Object.assign(model, update);
-    return model;
-  } catch (e) {
-    console.log(e);
-  }
-};
-
-function accept(data) {
-  if (data.counter) {
-    return { counter: model.counter + data.counter };
-  }
-  return model;
+export function createModel() {
+	return { counter: 0 };
 }
 
-export { model, present };
+export const present = (model, data) => {
+	try {
+		const update = accept(model, data);
+		return Object.assign({}, model, update);
+	} catch (e) {
+		console.log(e);
+		return model;
+	}
+};
+
+function accept(model, data) {
+	// Do we accept the action?
+	if (data.amount) {
+		return { counter: model.counter + data.amount };
+	}
+	return model;
+}

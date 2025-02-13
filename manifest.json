@@ -1,0 +1,8 @@
+{
+  "name": "No Framework",
+  "short_name": "No Framework",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fff",
+  "theme_color": "#fff"
+}
