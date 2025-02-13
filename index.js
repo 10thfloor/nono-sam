@@ -1,4 +1,8 @@
 import { Hello } from "./src/component.js ";
+import { stateManager } from "./src/state.js";
+import { SAMComponent } from "./lib/Component.js";
+
+SAMComponent.stateManager = stateManager;
 
 const components = new Map([["hello-world", Hello]]);
 

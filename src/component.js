@@ -1,4 +1,4 @@
-import { SAMComponent } from "../lib/Component.js";
+import { SAMComponent, SafeHTML } from "../lib/Component.js";
 import { INC_COUNTER, RESET_COUNTER } from "./actions.js";
 
 export class Hello extends SAMComponent {
@@ -9,8 +9,15 @@ export class Hello extends SAMComponent {
 		});
 	}
 
-	createModel() {
+	createLocalModel() {
 		return { counter: 0 };
+	}
+
+	selectGlobalState(globalState) {
+		// Merged into model
+		return {
+			tasks: globalState?.tasks,
+		};
 	}
 
 	// Define state representation
@@ -19,6 +26,7 @@ export class Hello extends SAMComponent {
 			counter: model.counter,
 			isHigh: model.counter > 5,
 			displayClass: model.counter > 5 ? "high-value" : "normal-value",
+			tasks: model.tasks, // Should be the array from global state
 		};
 	}
 
@@ -42,13 +50,25 @@ export class Hello extends SAMComponent {
 		},
 	];
 
-	render({ counter, isHigh, displayClass }) {
+	render(state) {
 		return this.html`
-        <div class="hello ${displayClass}">
-            HELLO! ${counter}
-            <button id="inc" ${isHigh ? "disabled" : ""}>
+        <div class="hello ${state.displayClass}">
+            HELLO! ${state.counter}
+            <button id="inc" ${state.isHigh ? "disabled" : ""}>
                 Increment Counter
             </button>
+            <ul>
+            ${state.tasks
+							.map(
+								(task) => this.html`
+                  <li class="task">
+                    ${task}
+                  </li>
+                `,
+							)
+							.join("")}
+          </ul>
+        </ul>
         </div>
     `;
 	}
