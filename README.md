@@ -63,17 +63,12 @@ export class Hello extends SAMComponent {
                 Increment Counter
             </button>
             <ul>
-            ${state.tasks
-							.map(
-								(task) => this.html`
+            ${state.tasks.map((task) => this.html`
                   <li class="task">
                     ${task}
                   </li>
-                `,
-							)
-							.join("")}
-          </ul>
-        </ul>
+                `).join("")}
+            </ul>
         </div>
     `;
 	}
